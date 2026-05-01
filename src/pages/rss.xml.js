@@ -1,16 +1,18 @@
 import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { parsePostId } from '../i18n/utils';
 
 export async function GET(context) {
-	const posts = await getCollection('blog');
+	const posts = (await getCollection('blog')).filter(
+		(p) => parsePostId(p.id).lang === 'zh',
+	);
 	return rss({
-		title: SITE_TITLE,
-		description: SITE_DESCRIPTION,
+		title: 'dahai9 博客',
+		description: '欢迎来到我的网站！',
 		site: context.site,
 		items: posts.map((post) => ({
 			...post.data,
-			link: `/blog/${post.id}/`,
+			link: `/blog/${parsePostId(post.id).slug}/`,
 		})),
 	});
 }
