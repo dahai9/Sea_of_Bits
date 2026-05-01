@@ -1,17 +1,28 @@
 ---
-import { SITE_TITLE } from '../consts';
+import type { Locale } from '../i18n/ui';
+import { defaultLocale } from '../i18n/ui';
+import { useTranslations, localePath } from '../i18n/utils';
 import HeaderLink from './HeaderLink.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+interface Props {
+	lang?: Locale;
+}
+
+const { lang = defaultLocale } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <header>
 	<nav>
-		<h2 class="site-title"><a href="/Sea_of_Bits/">{SITE_TITLE}</a></h2>
+		<h2 class="site-title"><a href={localePath('/', lang)}>{t('site.title')}</a></h2>
 		<div class="internal-links">
-			<HeaderLink href="/Sea_of_Bits/">Home</HeaderLink>
-			<HeaderLink href="/Sea_of_Bits/blog">Blog</HeaderLink>
-			<HeaderLink href="/Sea_of_Bits/about">About</HeaderLink>
+			<HeaderLink href={localePath('/', lang)}>{t('nav.home')}</HeaderLink>
+			<HeaderLink href={localePath('/blog', lang)}>{t('nav.blog')}</HeaderLink>
+			<HeaderLink href={localePath('/about', lang)}>{t('nav.about')}</HeaderLink>
 		</div>
 		<div class="social-links">
+			<LanguageSwitcher lang={lang} />
 			<a href="https://github.com/dahai9" target="_blank">
 				<span class="sr-only">Go to GitHub</span>
 				<svg viewBox="0 0 16 16" aria-hidden="true" width="24" height="24">
@@ -26,108 +37,109 @@ import HeaderLink from './HeaderLink.astro';
 		margin: 0;
 		padding: 0 1em;
 		background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
 		border-bottom: 1px solid var(--gray-light);
-    position: sticky;
-    top: 0;
-    z-index: 10;
+		position: sticky;
+		top: 0;
+		z-index: 10;
 	}
 
-  @media (prefers-color-scheme: dark) {
-    header {
-      background: rgba(15, 23, 42, 0.8);
-      border-bottom-color: rgba(51, 65, 85, 0.5);
-    }
-  }
+	@media (prefers-color-scheme: dark) {
+		header {
+			background: rgba(15, 23, 42, 0.8);
+			border-bottom-color: rgba(51, 65, 85, 0.5);
+		}
+	}
 
 	.site-title {
 		margin: 0;
 		font-size: 1.2rem;
-    font-weight: 800;
+		font-weight: 800;
 	}
 
 	.site-title a {
 		text-decoration: none;
-    color: var(--black);
+		color: var(--black);
 	}
 
 	nav {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-    max-width: 1000px;
-    margin: 0 auto;
-    height: 4rem;
+		max-width: 1000px;
+		margin: 0 auto;
+		height: 4rem;
 	}
 
 	.internal-links {
-    display: flex;
-    gap: 0.5rem;
+		display: flex;
+		gap: 0.5rem;
 	}
 
 	nav a {
 		padding: 0.5rem 0.75rem;
 		color: var(--gray);
 		text-decoration: none;
-    font-weight: 500;
-    border-radius: 8px;
-    transition: all 0.2s ease;
+		font-weight: 500;
+		border-radius: 8px;
+		transition: all 0.2s ease;
 	}
 
 	nav a:hover {
 		background-color: var(--gray-light);
-    color: var(--black);
+		color: var(--black);
 	}
 
 	nav a.active {
 		color: var(--accent);
-    background-color: var(--accent-light);
+		background-color: var(--accent-light);
 	}
 
-  @media (prefers-color-scheme: dark) {
-    nav a.active {
-      background-color: rgba(99, 102, 241, 0.2);
-      color: #a5b4fc;
-    }
-    nav a:hover {
-      background-color: rgba(51, 65, 85, 0.5);
-      color: #f1f5f9;
-    }
-  }
+	@media (prefers-color-scheme: dark) {
+		nav a.active {
+			background-color: rgba(99, 102, 241, 0.2);
+			color: #a5b4fc;
+		}
+		nav a:hover {
+			background-color: rgba(51, 65, 85, 0.5);
+			color: #f1f5f9;
+		}
+	}
 
 	.social-links {
 		display: flex;
-    gap: 0.5rem;
+		gap: 0.5rem;
+		align-items: center;
 	}
 
-  .social-links a {
-    color: var(--gray);
-    display: flex;
-    align-items: center;
-    padding: 0.5rem;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-  }
+	.social-links a {
+		color: var(--gray);
+		display: flex;
+		align-items: center;
+		padding: 0.5rem;
+		border-radius: 8px;
+		transition: all 0.2s ease;
+	}
 
-  .social-links a:hover {
-    color: var(--black);
-    background-color: var(--gray-light);
-  }
+	.social-links a:hover {
+		color: var(--black);
+		background-color: var(--gray-light);
+	}
 
-  @media (prefers-color-scheme: dark) {
-    .social-links a:hover {
-      background-color: rgba(51, 65, 85, 0.5);
-      color: #f1f5f9;
-    }
-  }
+	@media (prefers-color-scheme: dark) {
+		.social-links a:hover {
+			background-color: rgba(51, 65, 85, 0.5);
+			color: #f1f5f9;
+		}
+	}
 
 	@media (max-width: 720px) {
 		.social-links {
 			display: none;
 		}
-    .internal-links {
-      gap: 0;
-    }
+		.internal-links {
+			gap: 0;
+		}
 	}
 </style>

@@ -1,19 +1,25 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../i18n/ui';
+import { defaultLocale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
 import { Image } from 'astro:assets';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & {
+	lang?: Locale;
+};
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, lang = defaultLocale } = Astro.props;
+const t = useTranslations(lang);
 ---
 
-<html lang="en">
+<html lang={lang}>
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={title} description={description} lang={lang} />
 		<style>
 			main {
 				width: 720px;
@@ -31,60 +37,62 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			}
 			.title h1 {
 				margin: 0 0 0.5rem 0;
-        font-size: 3rem;
-        font-weight: 800;
-        letter-spacing: -0.02em;
+				font-size: 3rem;
+				font-weight: 800;
+				letter-spacing: -0.02em;
 			}
 			.date {
 				color: var(--gray);
-        font-family: ui-monospace, SFMono-Regular, monospace;
-        font-size: 1rem;
+				font-family: ui-monospace, SFMono-Regular, monospace;
+				font-size: 1rem;
 			}
 			.last-updated-on {
 				font-style: italic;
 			}
-      .hero-image {
-        margin: 2rem 0 3rem;
-        border-radius: var(--border-radius);
-        overflow: hidden;
-        box-shadow: var(--box-shadow);
-      }
-      .hero-image img {
-        display: block;
-        width: 100%;
-        max-height: 400px;
-        object-fit: cover;
-      }
-      @media (max-width: 720px) {
-        .title h1 { font-size: 2rem; }
-      }
+			.hero-image {
+				margin: 2rem 0 3rem;
+				border-radius: var(--border-radius);
+				overflow: hidden;
+				box-shadow: var(--box-shadow);
+			}
+			.hero-image img {
+				display: block;
+				width: 100%;
+				max-height: 400px;
+				object-fit: cover;
+			}
+			@media (max-width: 720px) {
+				.title h1 {
+					font-size: 2rem;
+				}
+			}
 		</style>
 	</head>
 
 	<body>
-		<Header />
+		<Header lang={lang} />
 		<main>
 			<article>
 				<div class="prose">
 					<div class="title">
 						<div class="date">
-							<FormattedDate date={pubDate} />
+							<FormattedDate date={pubDate} lang={lang} />
 							{
 								updatedDate && (
 									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
+										{t('blog.lastUpdated')} <FormattedDate date={updatedDate} lang={lang} />
 									</div>
 								)
 							}
 						</div>
 						<h1>{title}</h1>
-            <p style="font-size: 1.25rem; color: var(--gray); margin-top: 1rem;">{description}</p>
+						<p style="font-size: 1.25rem; color: var(--gray); margin-top: 1rem;">{description}</p>
 					</div>
-          {heroImage && <div class="hero-image"><Image width={1020} height={510} src={heroImage} alt="" /></div>}
+					{heroImage && <div class="hero-image"><Image width={1020} height={510} src={heroImage} alt="" /></div>}
 					<slot />
 				</div>
 			</article>
 		</main>
-		<Footer />
+		<Footer lang={lang} />
 	</body>
 </html>

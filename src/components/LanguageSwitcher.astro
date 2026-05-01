@@ -1,0 +1,51 @@
+---
+import type { Locale } from '../i18n/ui';
+import { languages } from '../i18n/ui';
+
+interface Props {
+	lang: Locale;
+}
+
+const { lang } = Astro.props;
+const otherLang: Locale = lang === 'zh' ? 'en' : 'zh';
+
+const pathname = Astro.url.pathname.replace(/^\/Sea_of_Bits\/?/, '/');
+
+function getOtherUrl(): string {
+	if (lang === 'zh') {
+		return `/Sea_of_Bits/en${pathname === '/' ? '/' : pathname}`;
+	}
+	const withoutEn = pathname.replace(/^\/en\/?/, '/');
+	return `/Sea_of_Bits${withoutEn === '' ? '/' : withoutEn}`;
+}
+---
+
+<a href={getOtherUrl()} class="lang-switch">
+	{languages[otherLang]}
+</a>
+<style>
+	.lang-switch {
+		font-size: 0.85rem;
+		font-weight: 500;
+		color: var(--gray);
+		text-decoration: none;
+		padding: 0.35rem 0.75rem;
+		border: 1px solid var(--gray-light);
+		border-radius: 6px;
+		transition: all 0.2s ease;
+	}
+	.lang-switch:hover {
+		color: var(--black);
+		border-color: var(--gray);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.lang-switch {
+			border-color: rgba(51, 65, 85, 0.5);
+		}
+		.lang-switch:hover {
+			color: #f1f5f9;
+			border-color: rgba(100, 116, 139, 0.8);
+		}
+	}
+</style>

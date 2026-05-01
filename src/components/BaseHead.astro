@@ -1,20 +1,22 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
+import type { Locale } from '../i18n/ui';
+import { defaultLocale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
 import FallbackImage from '../assets/blog-placeholder-1.jpg';
-import { SITE_TITLE } from '../consts';
 
 interface Props {
 	title: string;
 	description: string;
 	image?: ImageMetadata;
+	lang?: Locale;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = FallbackImage } = Astro.props;
+const { title, description, image = FallbackImage, lang = defaultLocale } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <!-- Global Metadata -->
@@ -26,7 +28,7 @@ const { title, description, image = FallbackImage } = Astro.props;
 <link
 	rel="alternate"
 	type="application/rss+xml"
-	title={SITE_TITLE}
+	title={t('site.title')}
 	href={new URL('rss.xml', Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />

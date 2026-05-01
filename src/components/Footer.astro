@@ -1,9 +1,19 @@
 ---
+import type { Locale } from '../i18n/ui';
+import { defaultLocale } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+	lang?: Locale;
+}
+
+const { lang = defaultLocale } = Astro.props;
+const t = useTranslations(lang);
 const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} dahai9. All rights reserved.
+	&copy; {today.getFullYear()} dahai9. {t('footer.rights')}.
 	<div class="social-links">
 
 	</div>

@@ -7,19 +7,15 @@ const { href, class: className, ...props } = Astro.props;
 
 const { pathname } = Astro.url;
 
-// Normalize paths for comparison: remove trailing slashes and ensure base path is handled
 const normalize = (path: any) => path?.toString().replace(/\/$/, '') || '';
 
 const normalizedHref = normalize(href);
 const normalizedPathname = normalize(pathname);
 
-// A link is active if:
-// 1. It's an exact match
-// 2. For the Blog link, it's active if we are on any subpage of /blog
 const isBlog = normalizedHref.endsWith('/blog');
-const finalIsActive = isBlog 
-  ? normalizedPathname === normalizedHref || normalizedPathname.startsWith(normalizedHref + '/')
-  : normalizedPathname === normalizedHref;
+const finalIsActive = isBlog
+	? normalizedPathname === normalizedHref || normalizedPathname.startsWith(normalizedHref + '/')
+	: normalizedPathname === normalizedHref;
 ---
 
 <a href={href} class:list={[className, { active: finalIsActive }]} {...props}>
