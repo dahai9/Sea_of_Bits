@@ -2,6 +2,7 @@
 title: '用 Rust 为网页 AI 搭建本地桥梁：openlink-rs 技术剖析'
 description: 'openlink-rs 是一个基于 Rust (Axum + Tokio) 的本地代理服务，配合浏览器扩展让 ChatGPT、Gemini 等网页 AI 直接操作本地文件系统。本文从架构设计、安全模型、工具系统到浏览器扩展的流式拦截，完整拆解这个项目的技术实现。'
 pubDate: 'Apr 30 2026'
+heroImage: '../../assets/openlink-rs-banner.png'
 ---
 
 > **摘要**：网页版 AI（ChatGPT、Gemini、AI Studio）能力强大，但无法触及用户的本地文件系统。openlink-rs 通过一个本地 Rust 服务 + 浏览器扩展的组合，在 AI 网页和本地文件系统之间架起了一座桥梁。本文剖析其整体架构、核心模块、安全模型以及浏览器扩展的流式响应拦截技术。

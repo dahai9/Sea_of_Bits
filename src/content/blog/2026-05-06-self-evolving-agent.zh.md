@@ -2,6 +2,7 @@
 title: '自进化 Agent：让 AI 从交互中改写自己的代码'
 description: '当下 AI Agent 的行为逻辑在启动时就被锁定，无法从交互中学习和改进。本文探讨一种自进化 Agent 架构——让 Agent 通过日常交互积累经验，并将这些经验转化为对自身代码的改进，从而实现自动升级。'
 pubDate: 'May 06 2026'
+heroImage: '../../assets/self-evolving-agent-banner.png'
 ---
 
 > **摘要**：当下的 AI Agent 有一个根本性的矛盾：它们被设计来解决复杂问题，却无法解决自身的问题。本文探讨一种自进化 Agent 架构，让 Agent 通过与人类的日常交互积累经验，并将这些经验转化为对自身代码的改进。

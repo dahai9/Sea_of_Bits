@@ -2,6 +2,7 @@
 title: 'Building a Local Bridge for Web AI with Rust: Technical Analysis of openlink-rs'
 description: 'openlink-rs is a local proxy service based on Rust (Axum + Tokio) that, together with a browser extension, allows Web AIs like ChatGPT and Gemini to directly operate on the local filesystem. This post dissects the project implementation, from architecture design and safety models to streaming interception in the browser extension.'
 pubDate: 'Apr 30 2026'
+heroImage: '../../assets/openlink-rs-banner.png'
 ---
 
 > **Summary**: Web-based AIs (ChatGPT, Gemini, AI Studio) are powerful but cannot reach the user's local filesystem. openlink-rs bridges this gap through a combination of a local Rust service and a browser extension. This post analyzes its overall architecture, core modules, security model, and the streaming response interception technology used in the browser extension.

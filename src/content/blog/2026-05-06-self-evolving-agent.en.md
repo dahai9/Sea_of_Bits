@@ -2,6 +2,7 @@
 title: 'Self-Evolving Agents: Letting AI Rewrite Its Own Code from Interaction'
 description: "Today's AI agents have their behavior locked at startup, unable to learn from interactions. This post explores a self-evolving agent architecture — one that accumulates experience from daily interactions and converts it into improvements to its own code."
 pubDate: 'May 06 2026'
+heroImage: '../../assets/self-evolving-agent-banner.png'
 ---
 
 > **Summary**: Today's AI agents have a fundamental contradiction: they are designed to solve complex problems, yet cannot solve their own. This post explores a self-evolving agent architecture that lets agents accumulate experience from everyday human interactions and convert that experience into improvements to their own code.
